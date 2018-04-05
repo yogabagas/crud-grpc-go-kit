@@ -1,0 +1,55 @@
+syntax="proto3";
+
+import "google/protobuf/empty.proto";
+
+package grpc;
+//step 3
+message AddDendaReq{
+    string ID = 1;
+    string Jenis = 2;
+    string Jumlah = 3;
+    int32 Status = 4;
+    string CreatedBy = 5;
+}
+
+message ReadDendaByIDReq{
+    string ID = 1;
+}
+
+message ReadDendaByIDResp{
+    string ID = 1;
+    string Jenis = 2;
+    string Jumlah = 3;
+    int32 Status = 4;
+    string Keterangan = 5;
+    string CreatedBy = 6;
+   
+}
+
+message ReadDendaResp{
+    repeated ReadDendaByIDResp allDenda = 1;
+}
+
+message ReadDendaByKeteranganReq {
+    string Keterangan = 1;
+}
+
+message ReadDendaByKeteranganResp{
+    repeated ReadDendaByIDResp ketDenda = 1;
+}
+
+message UpdateDendaReq{
+    string ID = 1;
+    string Jenis=2;
+    string Jumlah =3;
+    int32 Status=4;
+    string UpdatedBy = 5;
+}
+
+service DendaService{
+    rpc AddDenda(AddDendaReq) returns (google.protobuf.Empty) {};
+    rpc ReadDendaByID(ReadDendaByIDReq) returns (ReadDendaByIDResp) {};
+    rpc ReadDenda(google.protobuf.Empty) returns (ReadDendaResp){};
+    rpc ReadDendaByKeterangan (ReadDendaByKeteranganReq) returns (ReadDendaByKeteranganResp){};
+    rpc UpdateDenda(UpdateDendaReq) returns (google.protobuf.Empty){};
+}
